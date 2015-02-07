@@ -1,7 +1,7 @@
 html, body, #map-canvas {
         height: 100%;
         margin: 0px;
-        padding: 0px
+        padding: 0px;
       }
       #panel {
         position: absolute;
@@ -12,8 +12,5 @@ html, body, #map-canvas {
         background-color: #fff;
         padding: 5px;
         border: 1px solid #999;
-      }
-body {
-        background-color: #66E867;
       }
 
