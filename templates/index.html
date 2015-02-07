@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css')}}">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Lil' Foot</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+   
+  </head>
+  <body>
+    <div id="map-canvas" style="float:left;width:70%;height:100%;"></div>
+    <div id="name_panel" style="float:right;width:28%;text-align:left;margin-top:20px;margin-left:3px;">
+      <h1>Lil' Foot</h1>
+      <p>Get home from work and on the way let Yelp find you some dinner that'll be good for you tum-tum and for the planet.</p>
+    </div>
+    <div id="control_panel" style="float:right;width:28%;text-align:left;padding-top:20px">
+    <div style="margin:3px;border-width:2px;">
+    <b>Start:</b>
+    <input id="home"></input>
+    <select multiple id="needs">
+     <option value="">Groceries</option>
+     <option value="">Bread</option>
+     <option value="">Protein</option>
+     <option value="">Dessert<
+    </select>
+    <br>
+    <b>For dinner, I'm going to need to visit a:</b> <br>
+    <i>(Ctrl-Click for multiple selection)</i> <br>
+    <select multiple id="waypoints">
+      <option value="1250, rue Ontario Est, Montreal">Cafe Sfouf</option>
+    </select>
+    <br>
+    <b>End:</b>
+    <select id="end">
+      <option value="24 avenue des pins est, Montreal">Cafe M</option>
+      <option value="207 Beaubien Est, Montreal">Village Cafe</option>
+      <option value="244, De Castelnau est, Montreal">Cafe La Rue et Fils</option>
+    </select>
+    <br>
+      <input type="submit" onclick="calcRoute();">
+    </div>
+    <div id="directions_panel" style="margin:20px;background-color:#FFEE77;"></div>
+    </div>
+  </body>
+
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+  <script src="{{ url_for('static', filename='js/app.js')}}"></script>
+</html>
