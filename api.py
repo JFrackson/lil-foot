@@ -16,7 +16,7 @@ Sample usage of the program:
 `python sample.py --term="bars" --location="San Francisco, CA"`
 """
 
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, redirect
 
 import argparse
 import json
@@ -49,15 +49,22 @@ TOKEN_SECRET = 'mbg7wwxRkYOJ-5MJYONkZeeQA_M'
 def hello():
     return render_template('index.html')
 
-@app.route('/input', methods=['GET'])
+@app.route('/input', methods=['GET', 'POST'])
 def getData():
+    
     return render_template('form.html')
+    
+@app.route('/output', methods=['POST'])
+def returnData():
+    location =  request.form['location']
+    return redirect('/yelp/' + location)
 
-@app.route('/yelp')
-def yelp():
+@app.route('/yelp/<location>', methods=['GET'])
+def yelp(location):
 
+    #data =  search('', location)
 
-    data =  search('gluten-free', 'h9r 5x9')
+    data = search(location)
 
     data['businesses']
 
@@ -74,11 +81,11 @@ def yelp():
     #for category in categories:
     #    print category
 
-    #return jsonify({'business': data['businesses']}) # EVERYTHING
-    return jsonify({'names': categories}) # IDS!!!
+    return jsonify({'business': data['businesses']}) # EVERYTHING
+    #return jsonify({'names': categories}) # IDS!!!
 
 
-def request(host, path, url_params=None):
+def requestz(host, path, url_params=None):
     """Prepares OAuth authentication and sends the request to the API.
 
     Args:
@@ -122,7 +129,8 @@ def request(host, path, url_params=None):
 
     return response
 
-def search(term, location):
+#def search(term, location):
+def search(location):
     """Query the Search API by a search term and location.
 
     Args:
@@ -134,11 +142,13 @@ def search(term, location):
     """
     
     url_params = {
-        'term': term.replace(' ', '+'),
+        #'term': term.replace(' ', '+'),
         'location': location.replace(' ', '+'),
-        'limit': SEARCH_LIMIT
+        'limit': SEARCH_LIMIT,
+    
+        'category_filter': 'dog_parks'
     }
-    return request(API_HOST, SEARCH_PATH, url_params=url_params)
+    return requestz(API_HOST, SEARCH_PATH, url_params=url_params)
 
 def get_business(business_id):
     """Query the Business API by a business ID.
@@ -151,7 +161,7 @@ def get_business(business_id):
     """
     business_path = BUSINESS_PATH + business_id
 
-    return request(API_HOST, business_path)
+    return requestz(API_HOST, business_path)
 
 def query_api(term, location):
     """Queries the API by the input values from the user.
