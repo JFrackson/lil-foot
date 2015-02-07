@@ -1,15 +1,13 @@
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-    <script>
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
 
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
-  var montreal = new google.maps.LatLng(45.50000, -73.5767);
+  var chicago = new google.maps.LatLng(41.850033, -87.6500523);
   var mapOptions = {
-    zoom: 12,
-    center: montreal
+    zoom: 6,
+    center: chicago
   }
   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   directionsDisplay.setMap(map);
@@ -54,5 +52,3 @@ function calcRoute() {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
-    </script>
