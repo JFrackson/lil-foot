@@ -4,10 +4,10 @@ var map;
 
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
-  var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+  var montreal = new google.maps.LatLng(45.50000, -73.5767);
   var mapOptions = {
-    zoom: 6,
-    center: chicago
+    zoom: 12,
+    center: montreal
   }
   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   directionsDisplay.setMap(map);
