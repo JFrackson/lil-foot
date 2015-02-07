@@ -14,7 +14,7 @@ function initialize() {
 }
 
 function calcRoute() {
-  var start = document.getElementById('start').value;
+  var home = document.getElementById('home').value;
   var end = document.getElementById('end').value;
   var waypts = [];
   var checkboxArray = document.getElementById('waypoints');
@@ -27,7 +27,7 @@ function calcRoute() {
   }
 
   var request = {
-      origin: start,
+      origin: home,
       destination: end,
       waypoints: waypts,
       optimizeWaypoints: true,
@@ -43,7 +43,7 @@ function calcRoute() {
       for (var i = 0; i < route.legs.length; i++) {
         var routeSegment = i + 1;
         summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
-        summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+        summaryPanel.innerHTML += route.legs[i].home_address + ' to ';
         summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
         summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
       }
