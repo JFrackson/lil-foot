@@ -1,48 +1,44 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css')}}">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Lil' Paws</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  </head>
-  <body>
-    <!--div id="map-canvas" style="float:left;width:70%;height:100%;"></div-->
-    <div id="name_panel" style="float:right;width:28%;text-align:left;margin-top:20px;margin-left:3px;">
-      <h1>Lil' Paws</h1>
-      <p></p>
-    
-    <center>
-<form action="/output" method="post">
-  <input type="text" name="location" autocomplete="off"></input>
-  <input type="submit" value="Find puppies!!"></input>
-</form></center>
-<BR><BR>
-<div style = "height:600px; overflow:auto">
-    {% for display_value in display_values%}
-    <p> {{display_value[0]}}
-    {% if display_value[1] == '5' %}
-    <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}">
-    {% endif %}
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css')}}">
+      <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+      <meta charset="utf-8">
+      <title>Lil' Paws</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+      <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+    </head>
+    <body style="background-color: #FFF0EB">
+      <!--div id="map-canvas" style="float:left;width:70%;height:100%;"></div-->
+      <div id="name_panel" style="float:right;height:98%;width:28%;text-align:left;margin-top:20px;margin-left:3px;">
+        <div class="container-fluid" id="header" style ="display:inline-block; height:23%">
+        <img src="{{ url_for('static', filename='img/logopaws.png')}}" style="width:90%">
+        <p></p>
+        <form action="/output" method="post">
+        <input type="text" name="location" autocomplete="off"></input>
+        <input type="submit" value="Find puppies!!"></input>
+        </form>
+        </div>
+  <div class="container-fluid" id="body-results" style = "display:block; height:77%; overflow:auto; font-family:lato; font-size:16px">
+      {% for display_value in display_values%}
+      <p> {{display_value[0]}}
+      {% if display_value[1] == '5' %}
+      <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}">
+      {% endif %}
 
-    {% if display_value[1] == '4.5' %}
-    <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}">
-    {% endif %}
-  </p>
-    <br>
-    {% endfor %}
-
-</div>
-
-
-
-    </div>
+      {% if display_value[1] == '4.5' %}
+      <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}">
+      {% endif %}
+    </p>
+      <br>
+      {% endfor %}
+  </div>
+      </div>
 
 
-    {% block content %}{% endblock %}
-  </body>
+      {% block content %}{% endblock %}
+    </body>
 
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-  <!--script src="{{ url_for('static', filename='js/app.js')}}"></script-->
-</html>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <!--script src="{{ url_for('static', filename='js/app.js')}}"></script-->
+  </html>
