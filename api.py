@@ -18,6 +18,7 @@ Sample usage of the program:
 
 from flask import Flask, jsonify, request, render_template, redirect
 from flask.ext.googlemaps import GoogleMaps
+from flask.ext.googlemaps import Map
 
 import argparse
 import json
@@ -27,6 +28,7 @@ import os
 import requests
 import urllib
 import urllib2
+import simplejson
 
 import oauth2
 
@@ -53,7 +55,7 @@ TOKEN_SECRET = 'mbg7wwxRkYOJ-5MJYONkZeeQA_M'
 
 @app.route('/', methods = ['GET'])
 def hello():
-    return render_template('index.html')
+    return render_template('puppies.html')
 
 ''' 
     Initial puppies page
@@ -86,31 +88,67 @@ def puppies(location):
     for business in data['businesses']:
         name = business['name'] # Name
         location = business['location']
+        rating = business['rating_img_url']
 
-        filtered_data[name] = location
+        filtered_data[name] = [location,rating]
 
     return filtered_data
+
+
+googleGeocodeUrl = 'http://maps.googleapis.com/maps/api/geocode/json?'
+
+def get_coordinates(query, from_sensor=False):
+    query = query.encode('utf-8')
+    params = {
+        'address': query,
+        'sensor': "true" if from_sensor else "false"
+    }
+    url = googleGeocodeUrl + urllib.urlencode(params)
+    json_response = urllib.urlopen(url)
+    response = simplejson.loads(json_response.read())
+    if response['results']:
+        location = response['results'][0]['geometry']['location']
+        latitude, longitude = location['lat'], location['lng']
+        print query, latitude, longitude
+    else:
+        latitude, longitude = None, None
+        print query, "<no results>"
+    return latitude, longitude
 
 
 '''
     Display map after puppies request
 '''
-@app.route('/puppies/<location>', methods=['GET'])
-def yelp(location):
+@app.route('/puppies/<start>', methods=['GET'])
+def yelp(start):
 
-    data = puppies(location)
+    data = puppies(start)
+    #print data
+
+    lat, lng = get_coordinates(start)
+    location = (lat,lng)
 
     names = data.keys()
     coordinates = []
     longitudes = []
     latitudes = []
 
+    ratings = []
     parks = []
 
     for park in names:
-        address = data[park]
+
+        address = (data[park])[0]
         coordinate = address['coordinate']
 
+        rating = (data[park])[1]
+        if 'stars_5.png' in rating:
+            rating = '5'
+        elif 'stars_4_half.png':
+            rating = '4.5'
+        else:
+            rating = rating
+        ratings.append(rating)
         coordinates.append(coordinate)
 
     for coordinate in coordinates:
@@ -118,7 +156,20 @@ def yelp(location):
         longitude = coordinate['longitude']
         parks.append((latitude,longitude))
 
-    return render_template('map_result.html', parks=parks)
+    sndmap = Map(
+        identifier = "sndmap",
+        lat=lat,
+        lng = lng,
+        markers={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png':location, 
+        'http://maps.google.com/mapfiles/ms/icons/green-dot.png':parks}
+
+        )
+
+    display_values = zip(names, ratings)
+    print display_values
+
+
+    return render_template('map_result.html', location=location, parks=parks, names=names, ratings=ratings, display_values=display_values)
 
 
 
@@ -185,6 +236,7 @@ def search(location):
         #'term': term.replace(' ', '+'),
         'location': location.replace(' ', '+'),
         'limit': SEARCH_LIMIT,
+        'sort':1,
     
         'category_filter': 'dog_parks'
     }

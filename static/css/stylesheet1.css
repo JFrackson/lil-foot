@@ -1,0 +1,27 @@
+html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+      }
+      #panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+
+
+body {
+  background-image: url("http://reliabletexaspower.com/wp-content/uploads/2014/12/golden_retriever_by_gazgoyle-d57blyx.jpg") ;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat ;
+  background-attachment: fixed;
+}
+

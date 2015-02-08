@@ -6,51 +6,41 @@
     <meta charset="utf-8">
     <title>Lil' Paws</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-   
   </head>
   <body>
     <!--div id="map-canvas" style="float:left;width:70%;height:100%;"></div-->
     <div id="name_panel" style="float:right;width:28%;text-align:left;margin-top:20px;margin-left:3px;">
       <h1>Lil' Paws</h1>
-      <p>Get home from work and on the way let Yelp find you some puppies!!</p>
+      <p></p>
     
     <center>
 <form action="/output" method="post">
   <input type="text" name="location" autocomplete="off"></input>
   <input type="submit" value="Find puppies!!"></input>
 </form></center>
+<BR><BR>
+<div style = "height:600px; overflow:auto">
+    {% for display_value in display_values%}
+    <p> {{display_value[0]}}
+    {% if display_value[1] == '5' %}
+    <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}">
+    {% endif %}
+
+    {% if display_value[1] == '4.5' %}
+    <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}"> <img src="{{ url_for('static', filename='img/lilpaw.png')}}">
+    {% endif %}
+  </p>
+    <br>
+    {% endfor %}
+
+</div>
+
+
+
     </div>
 
+
     {% block content %}{% endblock %}
-    <!--div id="control_panel" style="float:right;width:28%;text-align:left;padding-top:20px">
-      
-    <div style="margin:3px;border-width:2px;">
-    <b>Start:</b>
-    <input id="home"></input>
-    <select multiple id="needs">
-     <option value="">Groceries</option>
-     <option value="">Bread</option>
-     <option value="">Protein</option>
-     <option value="">Dessert</option>
-    </select>
-    <br>
-    <b>For dinner, I'm going to need to visit a:</b> <br>
-    <i>(Ctrl-Click for multiple selection)</i> <br>
-    <select multiple id="waypoints">
-      <option value="1250, rue Ontario Est, Montreal">Cafe Sfouf</option>
-    </select>
-    <br>
-    <b>End:</b>
-    <select id="end">
-      <option value="24 avenue des pins est, Montreal">Cafe M</option>
-      <option value="207 Beaubien Est, Montreal">Village Cafe</option>
-      <option value="244, De Castelnau est, Montreal">Cafe La Rue et Fils</option>
-    </select>
-    <br>
-      <input type="submit" onclick="calcRoute();">
-    </div>
-    <div id="directions_panel" style="margin:20px;background-color:#FFEE77;"></div>
-    </div-->
   </body>
 
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
