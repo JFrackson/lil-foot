@@ -14,7 +14,7 @@
       </div>
       <!--div id="map-canvas" style="float:left;width:70%;height:100%;"></div-->
       <div id="name_panel" style="float:right;height:98%;width:28%;text-align:left;margin-top:20px;margin-left:3px;">
-        <div class="container-fluid" id="header" style ="display:inline-block; height:23%">
+        <div class="container-fluid" id="header" style ="display:inline-block; height:20%">
         <img src="{{ url_for('static', filename='img/logopaws.png')}}" style="width:90%">
         <p></p>
         <form action="/output" method="post">
@@ -22,7 +22,7 @@
         <input type="submit" value="Find puppies!!"></input>
         </form>
         </div>
-  <div class="container-fluid" id="body-results" style = "display:block; height:77%; overflow:auto; font-family:lato; font-size:16px">
+  <div class="container-fluid" id="body-results" style = "display:block; height:80%; overflow:auto; font-family:lato; font-size:16px">
       {% for display_value in display_values%}
       <p> {{display_value[0]}}
       {% if display_value[1] == '5' %}
