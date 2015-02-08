@@ -23,5 +23,18 @@ body {
   background-position: top center;
   background-repeat: no-repeat ;
   background-attachment: fixed;
+
+ 
+}
+
+.puppies{
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 95px;
+    font-family: 'Droid Serif', serif;
+    font-weight: 400;
+    font-style: italic;
+
+
 }
 
