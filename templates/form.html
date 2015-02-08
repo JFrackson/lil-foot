@@ -1,6 +1,8 @@
-{% include "index.html" %}<center>
+{% extends "index.html" %}
+{% block content %}
+<center>
 <form action="/output" method="post">
   <input type="text" name="location" autocomplete="off"></input>
-  <input type="submit" value="TestForm!"></input>
+  <input type="submit" value="Find puppies!!"></input>
 </form></center>
-{% block body %}{% endblock %}
+{% endblock %}

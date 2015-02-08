@@ -17,6 +17,7 @@ Sample usage of the program:
 """
 
 from flask import Flask, jsonify, request, render_template, redirect
+from flask.ext.googlemaps import GoogleMaps
 
 import argparse
 import json
@@ -30,6 +31,7 @@ import urllib2
 import oauth2
 
 app = Flask(__name__)
+GoogleMaps(app)
 PORT=int(os.environ.get('PORT', 5000))
 
 API_HOST = 'api.yelp.com'
@@ -45,44 +47,82 @@ CONSUMER_SECRET = 'Gxag6-dor9I2IdHybS9DSqGPebM'
 TOKEN = 'bg04FohLicwvcED9NVB-vXE66DXZxTMp'
 TOKEN_SECRET = 'mbg7wwxRkYOJ-5MJYONkZeeQA_M'
 
+'''
+    Main page. Nothing here.
+'''
+
 @app.route('/', methods = ['GET'])
 def hello():
     return render_template('index.html')
 
-@app.route('/input', methods=['GET', 'POST'])
+''' 
+    Initial puppies page
+'''
+
+@app.route('/puppies', methods=['GET', 'POST'])
 def getData():
+    return render_template('map.html')
     
-    return render_template('form.html')
-    
+'''
+    Manage POST
+'''
 @app.route('/output', methods=['POST'])
 def returnData():
     location =  request.form['location']
-    return redirect('/yelp/' + location)
+    return redirect('/puppies/' + location)
 
-@app.route('/yelp/<location>', methods=['GET'])
+''' 
+    Returns dictionary: {Park name: address}, where address
+    is a dictionary with fields "address", "city", "coordinate",
+    "country_code", "display_address", "geo_accuracy", "postal_code",
+    "state_code".
+    "coordinate" is itself a dictionary with fields "latitude", 
+    "longitude".
+'''
+def puppies(location):
+    data = search(location)
+    filtered_data = {}
+
+    for business in data['businesses']:
+        name = business['name'] # Name
+        location = business['location']
+
+        filtered_data[name] = location
+
+    return filtered_data
+
+
+'''
+    Display map after puppies request
+'''
+@app.route('/puppies/<location>', methods=['GET'])
 def yelp(location):
 
-    #data =  search('', location)
+    data = puppies(location)
 
-    data = search(location)
+    names = data.keys()
+    coordinates = []
+    longitudes = []
+    latitudes = []
 
-    data['businesses']
+    parks = []
 
-    business = data['businesses']
+    for park in names:
+        address = data[park]
+        coordinate = address['coordinate']
 
-    categories = []
+        coordinates.append(coordinate)
 
-    for bus in business:
-        #categories.append(bus['id']) # ID!!!!!
-        categories.append(bus['name']) # NAME!!!!!
+    for coordinate in coordinates:
+        latitude = coordinate['latitude']
+        longitude = coordinate['longitude']
+        parks.append((latitude,longitude))
 
-    #categories = business['categories']
+    return render_template('map_result.html', parks=parks)
 
-    #for category in categories:
-    #    print category
 
-    return jsonify({'business': data['businesses']}) # EVERYTHING
-    #return jsonify({'names': categories}) # IDS!!!
+
+
 
 
 def requestz(host, path, url_params=None):

@@ -4,17 +4,26 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css')}}">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Lil' Foot</title>
+    <title>Lil' Paws</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
    
   </head>
   <body>
-    <div id="map-canvas" style="float:left;width:70%;height:100%;"></div>
+    <!--div id="map-canvas" style="float:left;width:70%;height:100%;"></div-->
     <div id="name_panel" style="float:right;width:28%;text-align:left;margin-top:20px;margin-left:3px;">
-      <h1>Lil' Foot</h1>
-      <p>Get home from work and on the way let Yelp find you some dinner that'll be good for you tum-tum and for the planet.</p>
+      <h1>Lil' Paws</h1>
+      <p>Get home from work and on the way let Yelp find you some puppies!!</p>
+    
+    <center>
+<form action="/output" method="post">
+  <input type="text" name="location" autocomplete="off"></input>
+  <input type="submit" value="Find puppies!!"></input>
+</form></center>
     </div>
-    <div id="control_panel" style="float:right;width:28%;text-align:left;padding-top:20px">
+
+    {% block content %}{% endblock %}
+    <!--div id="control_panel" style="float:right;width:28%;text-align:left;padding-top:20px">
+      
     <div style="margin:3px;border-width:2px;">
     <b>Start:</b>
     <input id="home"></input>
@@ -22,7 +31,7 @@
      <option value="">Groceries</option>
      <option value="">Bread</option>
      <option value="">Protein</option>
-     <option value="">Dessert<
+     <option value="">Dessert</option>
     </select>
     <br>
     <b>For dinner, I'm going to need to visit a:</b> <br>
@@ -41,9 +50,9 @@
       <input type="submit" onclick="calcRoute();">
     </div>
     <div id="directions_panel" style="margin:20px;background-color:#FFEE77;"></div>
-    </div>
+    </div-->
   </body>
 
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-  <script src="{{ url_for('static', filename='js/app.js')}}"></script>
+  <!--script src="{{ url_for('static', filename='js/app.js')}}"></script-->
 </html>

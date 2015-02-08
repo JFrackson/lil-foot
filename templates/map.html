@@ -1,0 +1,18 @@
+{% include "index.html" %}
+
+{% with %}
+
+    {% set location=(45.50000, -73.5767) %}
+    {% set style="width:70%;height:100%;"%}
+
+    {{
+    googlemap(
+        "simple-map",
+        location.0, location.1,
+        
+        style=style
+        )
+    }}
+
+{% endwith %}
+{% block body %}{% endblock %}
