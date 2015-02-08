@@ -9,6 +9,9 @@
       <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
     </head>
     <body style="background-color: #FFF0EB">
+      <div>
+        {% if display_values%}<img src="{{ url_for('static', filename='img/tumblr_miavcw7PIn1rj3x28o1_500.gif')}}" style="position:absolute; bottom:0; right:0; height:50px; width:50px">{% endif %}
+      </div>
       <!--div id="map-canvas" style="float:left;width:70%;height:100%;"></div-->
       <div id="name_panel" style="float:right;height:98%;width:28%;text-align:left;margin-top:20px;margin-left:3px;">
         <div class="container-fluid" id="header" style ="display:inline-block; height:23%">
